@@ -28,6 +28,8 @@ class CustomTextField extends StatelessWidget {
   final FieldType fieldType;
   final Function(String?) extraValidation;
 
+  final TextStyle labelTextStyle;
+
   const CustomTextField(
       {super.key,
       required this.label,
@@ -36,18 +38,19 @@ class CustomTextField extends StatelessWidget {
       this.isRequired = true,
       this.showRedStar = true,
       this.fieldType = FieldType.Text,
-      this.extraValidation = nullFunction});
+      this.extraValidation = nullFunction,
+      this.labelTextStyle = defaultTextStyle16});
 
   Widget _buildLabel() {
     List<TextSpan> textSpans = [];
     textSpans.add(TextSpan(
       text: label,
-      style: defaultTextStyle16,
+      style: labelTextStyle,
     ));
 
     textSpans.add(TextSpan(
       text: desc,
-      style: defaultTextStyle16,
+      style: labelTextStyle,
     ));
 
     if (isRequired && showRedStar) {
