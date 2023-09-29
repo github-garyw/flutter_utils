@@ -80,24 +80,25 @@ class CustomTextField extends StatelessWidget {
             border: OutlineInputBorder(), // Add border outline here
           ),
           validator: (value) {
-            if (isRequired && AppUtils.isNullOrEmptyString(value!)) {
+            String trimmedValue = value!.trim();
+            if (isRequired && AppUtils.isNullOrEmptyString(trimmedValue)) {
               return '請輸入 $label';
             }
             if (fieldType == FieldType.Integer &&
-                int.tryParse(value!) == null) {
+                int.tryParse(trimmedValue) == null) {
               return '請輸入整數';
             }
             if (fieldType == FieldType.Numeric &&
-                double.tryParse(value!) == null) {
+                double.tryParse(trimmedValue) == null) {
               return '請輸入數字';
             }
             if (fieldType == FieldType.Email &&
                 isRequired &&
-                !AppUtils.validateEmail(value!)) {
+                !AppUtils.validateEmail(trimmedValue)) {
               return '電郵格式無效';
             }
 
-            return extraValidation(value); // all good
+            return extraValidation(trimmedValue); // all good
           },
         ),
         const SizedBox(
