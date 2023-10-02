@@ -82,7 +82,7 @@ class AppUtils {
     final AlertDialog alert = AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [cancelButton, continueButton]);
+        actions: [continueButton, cancelButton]);
 
     final bool confirmation = await showDialog(
         context: context,
