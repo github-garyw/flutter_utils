@@ -63,17 +63,19 @@ class AppUtils {
 
   static Future<bool> showYesNoPopup(
       BuildContext context, String title, String message) async {
+
     // set up the buttons
-    final Widget cancelButton = TextButton(
-      child: const Text("No"),
-      onPressed: () {
-        Navigator.of(context).pop(false);
-      },
-    );
     final Widget continueButton = TextButton(
       child: const Text("Yes"),
       onPressed: () {
         Navigator.of(context).pop(true);
+      },
+    );
+
+    final Widget cancelButton = TextButton(
+      child: const Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop(false);
       },
     );
 
