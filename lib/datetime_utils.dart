@@ -9,7 +9,7 @@ class DateTimeUtils {
   }
 
   // Return mockedDateTime if not null and mocked = true, otherwise DateTime.now()
-  static DateTime getCurrentDateTime({String? mockedDateTimeString}) {
+  static DateTime getCurrentDateTime(String? mockedDateTimeString) {
     if (mockedDateTimeString == null) {
       return DateTime.now();
     }
