@@ -14,7 +14,7 @@ class AppUtils {
   }
 
   static bool validateEmail(String? email) {
-    if (email == null) {
+    if (email == null || email.isEmpty) {
       return false;
     }
     return RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(email);

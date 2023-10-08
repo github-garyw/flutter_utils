@@ -93,7 +93,6 @@ class CustomTextField extends StatelessWidget {
               return '請輸入數字';
             }
             if (fieldType == FieldType.Email &&
-                isRequired &&
                 !AppUtils.validateEmail(trimmedValue)) {
               return '電郵格式無效';
             }
