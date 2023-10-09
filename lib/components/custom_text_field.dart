@@ -67,6 +67,13 @@ class CustomTextField extends StatelessWidget {
     );
   }
 
+  TextInputType? _getTextInputText() {
+    if (fieldType == FieldType.Integer || fieldType == FieldType.Numeric) {
+      return TextInputType.number;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,6 +81,7 @@ class CustomTextField extends StatelessWidget {
       children: [
         _buildLabel(),
         TextFormField(
+          keyboardType: _getTextInputText(),
           controller: controller,
           obscureText: fieldType == FieldType.Password,
           decoration: const InputDecoration(
