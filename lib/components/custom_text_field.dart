@@ -27,8 +27,8 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final FieldType fieldType;
   final Function(String?) extraValidation;
-
   final TextStyle labelTextStyle;
+  final int maxLines;
 
   const CustomTextField(
       {super.key,
@@ -37,6 +37,7 @@ class CustomTextField extends StatelessWidget {
       this.desc = '',
       this.isRequired = true,
       this.showRedStar = true,
+      this.maxLines = 1,
       this.fieldType = FieldType.Text,
       this.extraValidation = nullFunction,
       this.labelTextStyle = defaultTextStyle16});
@@ -84,6 +85,7 @@ class CustomTextField extends StatelessWidget {
           keyboardType: _getTextInputText(),
           controller: controller,
           obscureText: fieldType == FieldType.Password,
+          maxLines: maxLines,
           decoration: const InputDecoration(
             border: OutlineInputBorder(), // Add border outline here
           ),
