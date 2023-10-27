@@ -24,13 +24,15 @@ class CustomTextField extends StatelessWidget {
   final String desc;
   final bool isRequired;
   final bool showRedStar;
+  final bool readonly;
   final TextEditingController? controller;
   final FieldType fieldType;
   final Function(String?) extraValidation;
   final TextStyle labelTextStyle;
   final int maxLines;
+  late String? readonlyValue;
 
-  const CustomTextField(
+  CustomTextField(
       {super.key,
       required this.label,
       required this.controller,
@@ -38,6 +40,7 @@ class CustomTextField extends StatelessWidget {
       this.isRequired = true,
       this.showRedStar = true,
       this.maxLines = 1,
+      this.readonly = false,
       this.fieldType = FieldType.Text,
       this.extraValidation = nullFunction,
       this.labelTextStyle = defaultTextStyle16});
@@ -54,7 +57,7 @@ class CustomTextField extends StatelessWidget {
       style: labelTextStyle,
     ));
 
-    if (isRequired && showRedStar) {
+    if (isRequired && showRedStar && !readonly) {
       textSpans.add(const TextSpan(
         text: ' *',
         style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
@@ -77,6 +80,11 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (readonly) {
+      readonlyValue = controller?.text;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,9 +94,15 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           obscureText: fieldType == FieldType.Password,
           maxLines: maxLines,
+          readOnly: readonly,
           decoration: const InputDecoration(
             border: OutlineInputBorder(), // Add border outline here
           ),
+          onChanged: (value) {
+            if (readonly) {
+              controller?.text = readonlyValue ?? '';
+            }
+          },
           validator: (value) {
             String trimmedValue = value!.trim();
             if (isRequired && AppUtils.isNullOrEmptyString(trimmedValue)) {
