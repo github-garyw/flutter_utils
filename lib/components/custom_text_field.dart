@@ -95,6 +95,7 @@ class CustomTextField extends StatelessWidget {
           obscureText: fieldType == FieldType.Password,
           maxLines: maxLines,
           readOnly: readonly,
+          enabled: !readonly,
           decoration: const InputDecoration(
             border: OutlineInputBorder(), // Add border outline here
           ),
