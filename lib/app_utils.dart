@@ -5,7 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AppUtils {
 
-  static List<T> castDynamicList<T>(List<dynamic> dataList) {
+  static List<T> castDynamicList<T>(List<dynamic>? dataList) {
+    if (dataList == null) {
+      return [];
+    }
     return dataList.map((e) => e as T).toList();
   }
 
