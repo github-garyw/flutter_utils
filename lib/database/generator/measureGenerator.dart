@@ -11,6 +11,10 @@ import './sqlGenerator.dart';
 
 void main() async {
   final directoryPath = '${Directory.current.path}/schemas/';
+  generateFromDirectory(directoryPath);
+}
+
+void generateFromDirectory(String directoryPath) async {
   print('Schemas directory : ${directoryPath}');
 
   // Get a list of files in the directory
