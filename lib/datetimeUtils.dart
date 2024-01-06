@@ -4,6 +4,11 @@ class DateTimeUtils {
 
   static final format_yMdHm = DateFormat('yyyy-MM-dd HH:mm', 'en_US');
   static final format_yMd = DateFormat('yyyy-MM-dd', 'en_US');
+  static final format_Hm = DateFormat('HH:mm', 'en_US');
+
+  static String toLocalyHm(DateTime dateTime) {
+    return format_Hm.format(dateTime);
+  }
 
   static String toLocalyMd(DateTime dateTime) {
     return format_yMd.format(dateTime);
