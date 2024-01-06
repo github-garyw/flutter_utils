@@ -3,6 +3,11 @@ import 'package:intl/intl.dart';
 class DateTimeUtils {
 
   static final format_yMdHm = DateFormat('yyyy-MM-dd HH:mm', 'en_US');
+  static final format_yMd = DateFormat('yyyy-MM-dd', 'en_US');
+
+  static String toLocalyMd(DateTime dateTime) {
+    return format_yMd.format(dateTime);
+  }
 
   static String toLocalyMdHm(DateTime dateTime) {
     return format_yMdHm.format(dateTime);
