@@ -193,6 +193,11 @@ class DartGenerator {
       } else if (fieldName == '_lastModifiedAt') {
         // do nothing
       } else {
+
+        if (field[TYPE].toString().toUpperCase() == 'DateTime?') {
+          ret += '$TAB${TAB}${TAB}"${fieldName.toLowerCase()}": ${field[NAME]}?.toIso8601String(),$END_OF_LINE';
+        }
+
         ret +=
             '$TAB${TAB}${TAB}"${fieldName.toLowerCase()}": $inputVar.$fieldName,$END_OF_LINE';
       }
