@@ -351,7 +351,9 @@ class DartGenerator {
 
     ret += '$TAB}) {$END_OF_LINE';
     ret += '$TAB${TAB}_id = id;$END_OF_LINE';
-    ret += '$TAB${TAB}_userId = userId;$END_OF_LINE';
+    if (schema.metaData[IS_USER_TABLE]) {
+      ret += '$TAB${TAB}_userId = userId;$END_OF_LINE';
+    }
     ret += '$TAB${TAB}_createdAt = createdAt;$END_OF_LINE';
     ret += '$TAB${TAB}_lastModifiedAt = lastModifiedAt;$END_OF_LINE';
     ret += '$TAB}$END_OF_LINE';
@@ -371,6 +373,7 @@ class DartGenerator {
     } else {
       switch (type) {
         case 'int':
+        case 'double':
           return '0';
         case 'String':
           return "''";
