@@ -4,12 +4,15 @@ import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AppUtils {
-
   static List<T> castDynamicList<T>(List<dynamic>? dataList) {
     if (dataList == null) {
       return [];
     }
     return dataList.map((e) => e as T).toList();
+  }
+
+  static bool isNullOrEmptyList(List list) {
+    return list == null || list.isEmpty;
   }
 
   static bool isNullOrEmptyString(String str) {
