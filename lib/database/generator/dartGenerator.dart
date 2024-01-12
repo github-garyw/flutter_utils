@@ -98,18 +98,17 @@ class DartGenerator {
     ret +=
     '$TAB${TAB}${TAB}${TAB}data = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}${TAB}.select()$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}${TAB}.range(start, numOfRecord);$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}${TAB}.range(start, numberOfRecords);$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}} else {$END_OF_LINE';
     ret +=
-    '$TAB${TAB}${TAB}${TAB}data = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}${TAB}.select();$END_OF_LINE';
+    '$TAB${TAB}${TAB}${TAB}data = await supabase.from(\'${schema.metaData[TABLE_NAME]}\').select();$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}${TAB}$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}};$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}}$END_OF_LINE';
 
     ret += '$TAB${TAB}${TAB}final result = data$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}.map((j) => $className.fromJson(j)))$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.map((j) => $className.fromJson(j))$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}.toList();$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}return Triple(true, result, '');$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}return Triple(true, result, "");$END_OF_LINE';
 
     ret += '$TAB${TAB}} catch (e, s) {$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
