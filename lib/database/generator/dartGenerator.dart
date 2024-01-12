@@ -89,12 +89,28 @@ class DartGenerator {
     final className = schema.metaData[CLASS_NAME]!;
     var ret = '';
 
-    ret += '${TAB}final Future<Triple<bool, List<$className>?, String>> range(int start=0, int numberOfRecords) async {$END_OF_LINE';
+    ret += '${TAB}static Future<Triple<bool, List<$className>?, String>> range({int start = 0, int numberOfRecords = 0}) async {$END_OF_LINE';
     ret += '$TAB${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
 
     ret += '$TAB${TAB}try {$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}List<dynamic>? data;$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}if (numberOfRecords > 0) {$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}${TAB}data = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}${TAB}.select()$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}${TAB}.range(start, numOfRecord);$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}} else {$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}${TAB}data = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}${TAB}.select();$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}${TAB}$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}};$END_OF_LINE';
 
-    ret += 'return null';
+    ret += '$TAB${TAB}${TAB}final result = data$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.map((j) => $className.fromJson(j)))$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.toList();$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}return Triple(true, result, '');$END_OF_LINE';
+
     ret += '$TAB${TAB}} catch (e, s) {$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
