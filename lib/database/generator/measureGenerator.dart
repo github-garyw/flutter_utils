@@ -91,6 +91,8 @@ Future<Schema> readCSV2Schema(File file) async {
   if (ret.metaData[DART_FILE_NAME] == null) {
     final dartFileName = basename(file.path).replaceAll('.csv', '.dart');
     ret.metaData[DART_FILE_NAME] = dartFileName;
+  } else {
+    ret.metaData[DART_FILE_NAME] += '.dart';
   }
 
   // Join the csv data back to a String
