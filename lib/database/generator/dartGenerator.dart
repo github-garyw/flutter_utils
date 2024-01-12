@@ -89,7 +89,7 @@ class DartGenerator {
     final className = schema.metaData[CLASS_NAME]!;
     var ret = '';
 
-    ret += '${TAB}static Future<Triple<bool, List<$className>?, String>> range({int start = 0, int numberOfRecords = 0}) async {$END_OF_LINE';
+    ret += '${TAB}static Future<Triple<bool, List<$className>?, String>> range({int start = 0, int numberOfRecords = 10}) async {$END_OF_LINE';
     ret += '$TAB${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
 
     ret += '$TAB${TAB}try {$END_OF_LINE';
