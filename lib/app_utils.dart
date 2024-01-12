@@ -11,7 +11,7 @@ class AppUtils {
     return dataList.map((e) => e as T).toList();
   }
 
-  static bool isNullOrEmptyList(List list) {
+  static bool isNullOrEmptyList(List? list) {
     return list == null || list.isEmpty;
   }
 
