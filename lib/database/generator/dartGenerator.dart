@@ -53,6 +53,9 @@ class DartGenerator {
     classContent += _getToString(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getRange(schema);
+    classContent += END_OF_LINE;
+
     classContent += _getInsert(schema);
     classContent += END_OF_LINE;
 
@@ -79,6 +82,27 @@ class DartGenerator {
         "import 'package:supabase_flutter/supabase_flutter.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/triple.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/app_utils.dart';$END_OF_LINE";
+    return ret;
+  }
+
+  static String _getRange(Schema schema) {
+    final className = schema.metaData[CLASS_NAME]!;
+    var ret = '';
+
+    ret += '${TAB}final Future<Triple<bool, List<$className>?, String>> range(int start=0, int numberOfRecords) async {$END_OF_LINE';
+    ret += '$TAB${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
+
+    ret += '$TAB${TAB}try {$END_OF_LINE';
+
+    ret += 'return null';
+    ret += '$TAB${TAB}} catch (e, s) {$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}return Triple(false, null, e.toString());$END_OF_LINE';
+    ret += '$TAB${TAB}}$END_OF_LINE';
+    ret += '$TAB}$END_OF_LINE';
+
     return ret;
   }
 
