@@ -56,6 +56,9 @@ class DartGenerator {
     classContent += _getToString(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getQueryById(schema);
+    classContent += END_OF_LINE;
+
     classContent += _getRange(schema);
     classContent += END_OF_LINE;
 
