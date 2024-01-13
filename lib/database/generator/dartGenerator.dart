@@ -47,6 +47,9 @@ class DartGenerator {
     classContent += _getCopyConstructor(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getReset(schema);
+    classContent += END_OF_LINE;
+
     classContent += _getFactoryFromJson(schema);
     classContent += END_OF_LINE;
 
@@ -360,6 +363,35 @@ class DartGenerator {
     });
     ret = ret.replaceFirst(
         ',', ';', ret.length - END_OF_LINE.length - 1); // replace last , to ;
+    return ret;
+  }
+
+  static String _getReset(Schema schema) {
+    var ret = '';
+    ret += '$TAB void reset() {$END_OF_LINE';
+
+    schema.fields.forEach((field) {
+      final name = field[NAME] as String;
+      switch (name) {
+        case '_id':
+          ret += "$TAB${TAB}id = 0;$END_OF_LINE";
+          break;
+        case '_userId':
+          ret += "$TAB${TAB}userId = '';$END_OF_LINE";
+          break;
+        case '_createdAt':
+          ret += "$TAB${TAB}createdAt = null;$END_OF_LINE";
+          break;
+        case '_lastModifiedAt':
+          ret += "$TAB${TAB}lastModifiedAt = null;$END_OF_LINE";
+          break;
+        default:
+          ret +=
+          "$TAB${TAB}${field[NAME]} = ${_getDartDefaultValue(field)};$END_OF_LINE";
+      }
+    });
+
+    ret += '$TAB}$END_OF_LINE';
     return ret;
   }
 
