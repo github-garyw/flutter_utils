@@ -124,9 +124,35 @@ class DartGenerator {
     return ret;
   }
 
+  static String _getQueryById(Schema schema) {
+    final className = schema.metaData[CLASS_NAME]!;
+    var ret = '';
+
+    ret +=
+    '${TAB}static Future<Triple<bool, $className?, String>> queryById(int id) async {$END_OF_LINE';
+    ret += '$TAB${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
+    ret += '$TAB${TAB}try {$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}final result = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.select()$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.eq({"_id": id});$END_OF_LINE$END_OF_LINE';
+
+    ret +=
+    '$TAB${TAB}${TAB}final row = $className.fromJson(result[0]);$END_OF_LINE';
+    ret += "$TAB${TAB}${TAB}return Triple(true, row, '');$END_OF_LINE";
+    ret += '$TAB${TAB}} catch (e, s) {$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}return Triple(false, null, e.toString());$END_OF_LINE';
+    ret += '$TAB${TAB}}$END_OF_LINE';
+    ret += '$TAB}$END_OF_LINE';
+
+    return ret;
+  }
+
   static String _getDelete(Schema schema) {
     final className = schema.metaData[CLASS_NAME]!;
-    final inputVar = className.toLowerCase();
     var ret = '';
 
     // static method
