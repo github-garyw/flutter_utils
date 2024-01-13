@@ -374,16 +374,16 @@ class DartGenerator {
       final name = field[NAME] as String;
       switch (name) {
         case '_id':
-          ret += "$TAB${TAB}id = 0;$END_OF_LINE";
+          ret += "$TAB${TAB})_id = 0;$END_OF_LINE";
           break;
         case '_userId':
-          ret += "$TAB${TAB}userId = '';$END_OF_LINE";
+          ret += "$TAB${TAB}_userId = '';$END_OF_LINE";
           break;
         case '_createdAt':
-          ret += "$TAB${TAB}createdAt = null;$END_OF_LINE";
+          ret += "$TAB${TAB}_createdAt = null;$END_OF_LINE";
           break;
         case '_lastModifiedAt':
-          ret += "$TAB${TAB}lastModifiedAt = null;$END_OF_LINE";
+          ret += "$TAB${TAB}_lastModifiedAt = null;$END_OF_LINE";
           break;
         default:
           ret +=
