@@ -374,7 +374,7 @@ class DartGenerator {
       final name = field[NAME] as String;
       switch (name) {
         case '_id':
-          ret += "$TAB${TAB})_id = 0;$END_OF_LINE";
+          ret += "$TAB${TAB}_id = 0;$END_OF_LINE";
           break;
         case '_userId':
           ret += "$TAB${TAB}_userId = '';$END_OF_LINE";
