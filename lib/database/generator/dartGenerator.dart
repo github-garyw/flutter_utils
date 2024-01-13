@@ -138,7 +138,7 @@ class DartGenerator {
     ret +=
     '$TAB${TAB}${TAB}final result = await supabase.from(\'${schema.metaData[TABLE_NAME]}\')$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}.select()$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}.eq({"_id": id});$END_OF_LINE$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}.eq("_id", id);$END_OF_LINE$END_OF_LINE';
 
     ret +=
     '$TAB${TAB}${TAB}final row = $className.fromJson(result[0]);$END_OF_LINE';
