@@ -10,7 +10,7 @@ class LoadingIndicator extends StatelessWidget {
     );
   }
 
-  static Future<void> showLoadingDialog(BuildContext context) async {
+  static Future<void> showLoadingDialog(BuildContext context) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // Prevent users from dismissing the dialog by tapping outside
