@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../app_utils.dart';
+import '../appUtils.dart';
 
 typedef ValidateFunction = String? Function(String?);
 

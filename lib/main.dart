@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_utils/components/custom_text_field.dart';
+import 'package:flutter_utils/components/customTextField.dart';
 
 void main() {
   runApp(const MyApp());

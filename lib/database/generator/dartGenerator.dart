@@ -87,7 +87,7 @@ class DartGenerator {
     ret =
         "import 'package:supabase_flutter/supabase_flutter.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/triple.dart';$END_OF_LINE";
-    ret += "import 'package:flutter_utils/app_utils.dart';$END_OF_LINE";
+    ret += "import 'package:flutter_utils/appUtils.dart';$END_OF_LINE";
     return ret;
   }
 
