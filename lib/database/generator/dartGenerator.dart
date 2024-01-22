@@ -5,6 +5,8 @@ import 'package:flutter_utils/fileUtils.dart';
 import './generatorUtils.dart';
 import 'schema.dart';
 
+const String GEOGRAPHY_POINT = 'GEOGRAPHY(POINT)';
+
 const Map<String, String> typeMap = {
   'SERIAL': 'int',
   'BIGSERIAL': 'int',
@@ -15,7 +17,7 @@ const Map<String, String> typeMap = {
   'TIMESTAMPTZ': 'DateTime?',
   'INTEGER[]': 'List<int>?',
   'TEXT[]': 'List<String>?',
-  'GEOGRAPHY(POINT)': 'SupabaseGeolocation?',
+  GEOGRAPHY_POINT: 'SupabaseGeolocation?',
 };
 
 class DartGenerator {
@@ -29,7 +31,7 @@ class DartGenerator {
   }
 
   static Future<void> createDartFile(Schema schema) async {
-    var classContent = _getImport();
+    var classContent = _getImport(schema);
     classContent += END_OF_LINE;
 
     classContent += "const String table = '${schema.metaData[TABLE_NAME]}';";
@@ -82,13 +84,19 @@ class DartGenerator {
     // print(classContent);
   }
 
-  static String _getImport() {
+  static String _getImport(Schema schema) {
     var ret = '';
     ret = "import 'package:flutter/material.dart';$END_OF_LINE";
     ret =
         "import 'package:supabase_flutter/supabase_flutter.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/triple.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/appUtils.dart';$END_OF_LINE";
+
+    final typeSet = schema.fields.map((e) => e.keys).toSet();
+    if (typeSet.contains(GEOGRAPHY_POINT)) {
+      ret += "import 'package:flutter_utils/database/supabase/models/supabaseGeolocation.dart';$END_OF_LINE";
+    }
+
     return ret;
   }
 
