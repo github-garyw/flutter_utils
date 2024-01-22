@@ -15,6 +15,7 @@ const Map<String, String> typeMap = {
   'TIMESTAMPTZ': 'DateTime?',
   'INTEGER[]': 'List<int>?',
   'TEXT[]': 'List<String>?',
+  'GEOGRAPHY(POINT)': 'SupabaseGeolocation?',
 };
 
 class DartGenerator {
