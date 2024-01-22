@@ -29,6 +29,7 @@ class CustomTextField extends StatelessWidget {
   final FieldType fieldType;
   final Function(String?) extraValidation;
   final TextStyle labelTextStyle;
+  final TextStyle inputTextStyle;
   final int maxLines;
   late String? readonlyValue;
 
@@ -43,7 +44,9 @@ class CustomTextField extends StatelessWidget {
       this.readonly = false,
       this.fieldType = FieldType.Text,
       this.extraValidation = nullFunction,
-      this.labelTextStyle = defaultTextStyle16});
+      this.labelTextStyle = defaultTextStyle16,
+      this.inputTextStyle = defaultTextStyle16,
+      });
 
   Widget _buildLabel() {
     List<TextSpan> textSpans = [];
@@ -99,6 +102,7 @@ class CustomTextField extends StatelessWidget {
           decoration: const InputDecoration(
             border: OutlineInputBorder(), // Add border outline here
           ),
+          style: inputTextStyle,
           onChanged: (value) {
             if (readonly) {
               controller?.text = readonlyValue ?? '';
