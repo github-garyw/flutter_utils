@@ -92,7 +92,7 @@ class DartGenerator {
     ret += "import 'package:flutter_utils/triple.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/appUtils.dart';$END_OF_LINE";
 
-    final typeSet = schema.fields.map((e) => e.keys).toSet();
+    final typeSet = schema.fields.map((e) => e[TYPE]).cast<String>().toSet();
     if (typeSet.contains(GEOGRAPHY_POINT)) {
       ret += "import 'package:flutter_utils/database/supabase/models/supabaseGeolocation.dart';$END_OF_LINE";
     }
