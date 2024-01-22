@@ -120,8 +120,8 @@ class DartGenerator {
     ret += '$TAB${TAB}${TAB}${TAB}$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}}$END_OF_LINE';
 
-    ret += '$TAB${TAB}${TAB}final result = data?$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}.map((j) => $className.fromJson(j))$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}final result = data$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}?.map((j) => $className.fromJson(j))$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}.toList();$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}return Triple(true, result, "");$END_OF_LINE';
 
