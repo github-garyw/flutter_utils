@@ -1,0 +1,13 @@
+ClassName:Test
+TableName:test
+IsUserTable:true
+START_OF_CSV
+name,type,tableDefaultValue,classDefaultValue,
+title,TEXT,,,,,,
+customTime,TIMESTAMPTZ,,,,
+content,TEXT,,,,
+location,TEXT,,,,
+locationPoint,GEOGRAPHY(POINT),,,,,
+thought,TEXT,,,,
+feeling,TEXT,,,,
+tags,TEXT[],,,,
