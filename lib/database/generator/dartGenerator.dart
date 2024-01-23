@@ -274,7 +274,7 @@ class DartGenerator {
         // do nothing
       } else {
 
-        if (field[TYPE].toString().toUpperCase() == 'DateTime?') {
+        if (field[TYPE].toString().toUpperCase() == 'TIMESTAMPTZ') {
           ret += '$TAB${TAB}${TAB}"${fieldName.toLowerCase()}": ${field[NAME]}?.toIso8601String(),$END_OF_LINE';
         }
 
