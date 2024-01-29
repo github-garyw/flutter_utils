@@ -37,7 +37,7 @@ class DartGenerator {
 
     classContent += 'class ${schema.metaData[CLASS_NAME]} {$END_OF_LINE';
     classContent += END_OF_LINE;
-    classContent += "static const String TABLE_NAME = '${schema.metaData[TABLE_NAME]}';$END_OF_LINE";
+    classContent += "${TAB}static const String TABLE_NAME = '${schema.metaData[TABLE_NAME]}';$END_OF_LINE";
     classContent += END_OF_LINE;
 
     classContent += _getMemberVariables(schema.fields);
