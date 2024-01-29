@@ -33,12 +33,11 @@ class DartGenerator {
   static Future<void> createDartFile(Schema schema) async {
     var classContent = _getImport(schema);
     classContent += END_OF_LINE;
-
-    classContent += "const String table = '${schema.metaData[TABLE_NAME]}';";
-    classContent += END_OF_LINE;
     classContent += END_OF_LINE;
 
     classContent += 'class ${schema.metaData[CLASS_NAME]} {$END_OF_LINE';
+    classContent += END_OF_LINE;
+    classContent += "static const String TABLE_NAME = '${schema.metaData[TABLE_NAME]}';$END_OF_LINE";
     classContent += END_OF_LINE;
 
     classContent += _getMemberVariables(schema.fields);
