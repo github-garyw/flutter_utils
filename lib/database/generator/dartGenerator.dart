@@ -366,30 +366,30 @@ class DartGenerator {
     fields.forEach((field) {
       switch (field[NAME]) {
         case '_id':
-          ret += '${TAB}static const String _ID = "_id";$END_OF_LINE';
+          ret += '${TAB}static const String c_id = "_id";$END_OF_LINE';
           ret += '${TAB}int _id = 0;$END_OF_LINE';
           ret += '${TAB}int get id => _id;$END_OF_LINE$END_OF_LINE';
           break;
         case '_userId':
-          ret += '${TAB}static const String _USERID = "_userid";$END_OF_LINE';
+          ret += '${TAB}static const String c_userid = "_userid";$END_OF_LINE';
           ret += "${TAB}String _userId = '';$END_OF_LINE";
           ret += '${TAB}String get userId => _userId;$END_OF_LINE$END_OF_LINE';
           break;
         case '_createdAt':
-          ret += '${TAB}static const String _CREATEDAT = "_createdat";$END_OF_LINE';
+          ret += '${TAB}static const String c_createdat = "_createdat";$END_OF_LINE';
           ret += '${TAB}DateTime? _createdAt;$END_OF_LINE';
           ret +=
               '${TAB}DateTime? get createdAt => _createdAt;$END_OF_LINE$END_OF_LINE';
           break;
         case '_lastModifiedAt':
-          ret += '${TAB}static const String _LASTMODIFIEDAT = "_lastmodifiedat";$END_OF_LINE';
+          ret += '${TAB}static const String c_lastmodifiedat = "_lastmodifiedat";$END_OF_LINE';
           ret += '${TAB}DateTime? _lastModifiedAt;$END_OF_LINE';
           ret +=
               '${TAB}DateTime? get lastModifiedAt => _lastModifiedAt;$END_OF_LINE$END_OF_LINE';
           break;
         default:
           ret +=
-          '${TAB}static const String ${field[NAME].toString().toUpperCase()} = "${field[NAME].toString().toLowerCase()}";$END_OF_LINE';
+          '${TAB}static const String c_${field[NAME].toString().toLowerCase()} = "${field[NAME].toString().toLowerCase()}";$END_OF_LINE';
           ret +=
               '$TAB${_mapColumnTypeToDart(field[TYPE])} ${field[NAME]};$END_OF_LINE';
       }
