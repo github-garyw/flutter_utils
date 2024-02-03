@@ -88,10 +88,17 @@ Future<Schema> readCSV2Schema(File file) async {
     }
   } while (lines.isNotEmpty);
 
+
   if (ret.metaData[DART_FILE_NAME] == null) {
-    final dartFileName = basename(file.path).replaceAll('.csv', '.dart');
-    ret.metaData[DART_FILE_NAME] = dartFileName;
+    final dartFilePrefix = basename(file.path).replaceAll('.csv', '');
+    if (ret.metaData[DART_FILE_PREFIX] == null) {
+      ret.metaData[DART_FILE_PREFIX] = dartFilePrefix;
+    }
+    ret.metaData[DART_FILE_NAME] = '$dartFilePrefix.dart';
   } else {
+    if (ret.metaData[DART_FILE_PREFIX] == null) {
+      ret.metaData[DART_FILE_PREFIX] = ret.metaData[DART_FILE_NAME];
+    }
     ret.metaData[DART_FILE_NAME] += '.dart';
   }
 

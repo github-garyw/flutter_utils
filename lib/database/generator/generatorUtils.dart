@@ -5,6 +5,7 @@ const String CLASS_NAME = "ClassName";
 const String IS_USER_TABLE = "IsUserTable";
 
 const String PACKAGE_PATH = "packagePath";
+const String DART_FILE_PREFIX = "DartFilePrefix";
 const String DART_FILE_NAME = "DartFileName";
 
 const String NAME = "name";

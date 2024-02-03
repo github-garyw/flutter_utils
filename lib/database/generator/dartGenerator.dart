@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_utils/database/generator/providerGenerator.dart';
 import 'package:flutter_utils/fileUtils.dart';
 
 import './generatorUtils.dart';
@@ -81,6 +82,9 @@ class DartGenerator {
     await FileUtils.writeToFile(
         targetPath, schema.metaData[DART_FILE_NAME]!, classContent);
     // print(classContent);
+
+    ProviderGenerator.createProviderFile(schema);
+
   }
 
   static String _getImport(Schema schema) {
