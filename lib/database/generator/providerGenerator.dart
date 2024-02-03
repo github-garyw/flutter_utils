@@ -23,7 +23,13 @@ class ProviderGenerator {
       classContent += _getOwnedStaticMethod(schema);
       classContent += END_OF_LINE;
 
+      classContent += _getDownloadOwned(schema);
+      classContent += END_OF_LINE;
+
       classContent += _getOwnedMethod(schema);
+      classContent += END_OF_LINE;
+
+      classContent += _getReloadOwned(schema);
       classContent += END_OF_LINE;
     }
 
@@ -36,6 +42,17 @@ class ProviderGenerator {
         (schema.metaData[PACKAGE_PATH] ?? '');
     await FileUtils.writeToFile(targetPath,
         '${schema.metaData[DART_FILE_PREFIX]!}Provider.dart', classContent);
+  }
+
+  static String _getReloadOwned(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+    '${TAB}Future<void> reloadOwned() async {$END_OF_LINE';
+    ret += '${TAB}${TAB}await _downloadOwned();$END_OF_LINE';
+    ret += '${TAB}${TAB}update();$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
+    return ret;
   }
 
   static String _getOwnedMethod(Schema schema) {
@@ -60,10 +77,21 @@ class ProviderGenerator {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
     ret +=
-        '${TAB}static Future<Triple<bool, List<$className>?, String>> sGetUser$className() async {$END_OF_LINE';
+    '${TAB}static Future<Triple<bool, List<$className>?, String>> sGetUser$className() async {$END_OF_LINE';
     ret += '${TAB}${TAB}if(_ownedData != null){$END_OF_LINE';
     ret += '${TAB}${TAB}${TAB}return Triple(true, _ownedData, "");$END_OF_LINE';
     ret += '${TAB}${TAB}}$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret += '${TAB}${TAB}return _downloadOwned();$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
+    return ret;
+  }
+
+  static String _getDownloadOwned(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+        '${TAB}static Future<Triple<bool, List<$className>?, String>> _downloadOwned() async {$END_OF_LINE';
     ret += END_OF_LINE;
     ret += '${TAB}${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
     ret +=
