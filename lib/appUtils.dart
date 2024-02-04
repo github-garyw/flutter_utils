@@ -99,7 +99,7 @@ class AppUtils {
         context: context,
         builder: (BuildContext context) {
           return alert;
-        });
+        }) ?? false;
 
     return confirmation;
   }
