@@ -2,7 +2,8 @@ ClassName:Test
 TableName:test
 IsUserTable:true
 START_OF_CSV
-name,type,tableDefaultValue,classDefaultValue,
+name,type,tableDefaultValue,classDefaultValue,skipInInsert,
+testId,uuid,uuid_generate_v4,,true,,,,
 title,TEXT,,,,,,
 customTime,TIMESTAMPTZ,,,,
 content,TEXT,,,,

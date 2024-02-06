@@ -267,22 +267,29 @@ class DartGenerator {
                 'BIGSERIAL') // as serial is auto incremented
         .forEach((field) {
       final fieldName = field[NAME].toString();
-      if (fieldName == '_userId') {
-        ret +=
-            '$TAB${TAB}${TAB}"_userid": supabase.auth.currentUser?.id,$END_OF_LINE';
-      } else if (fieldName == '_createdAt') {
-        ret +=
-            '$TAB${TAB}${TAB}"${fieldName.toLowerCase()}": DateTime.now().toUtc().toIso8601String(),$END_OF_LINE';
-      } else if (fieldName == '_lastModifiedAt') {
-        // do nothing
-      } else {
 
-        if (field[TYPE].toString().toUpperCase() == 'TIMESTAMPTZ') {
-          ret += '$TAB${TAB}${TAB}"${fieldName.toLowerCase()}": $inputVar.${field[NAME]}?.toUtc().toIso8601String(),$END_OF_LINE';
-        } else {
+      final String skipInInsertStr = field[SKIP_IN_INSERT] ?? 'false';
+      final skipInInsert = skipInInsertStr.isNotEmpty ? bool.parse(skipInInsertStr) : false;
+
+      if (!skipInInsert) {
+        if (fieldName == '_userId') {
+          ret +=
+          '$TAB${TAB}${TAB}"_userid": supabase.auth.currentUser?.id,$END_OF_LINE';
+        } else if (fieldName == '_createdAt') {
           ret +=
           '$TAB${TAB}${TAB}"${fieldName
-              .toLowerCase()}": $inputVar.$fieldName,$END_OF_LINE';
+              .toLowerCase()}": DateTime.now().toUtc().toIso8601String(),$END_OF_LINE';
+        } else if (fieldName == '_lastModifiedAt') {
+          // do nothing
+        } else {
+          if (field[TYPE].toString().toUpperCase() == 'TIMESTAMPTZ') {
+            ret += '$TAB${TAB}${TAB}"${fieldName
+                .toLowerCase()}": $inputVar.${field[NAME]}?.toUtc().toIso8601String(),$END_OF_LINE';
+          } else {
+            ret +=
+            '$TAB${TAB}${TAB}"${fieldName
+                .toLowerCase()}": $inputVar.$fieldName,$END_OF_LINE';
+          }
         }
       }
     });
