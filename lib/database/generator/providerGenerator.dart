@@ -19,6 +19,18 @@ class ProviderGenerator {
     classContent += _getMembers(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getAllStaticMethod(schema);
+    classContent += END_OF_LINE;
+
+    classContent += _getAllMethod(schema);
+    classContent += END_OF_LINE;
+
+    classContent += _getDownloadAll(schema);
+    classContent += END_OF_LINE;
+
+    classContent += _getReloadAll(schema);
+    classContent += END_OF_LINE;
+
     if (schema.metaData[IS_USER_TABLE]) {
       classContent += _getOwnedStaticMethod(schema);
       classContent += END_OF_LINE;
@@ -44,6 +56,17 @@ class ProviderGenerator {
         '${schema.metaData[DART_FILE_PREFIX]!}Provider.dart', classContent);
   }
 
+  static String _getReloadAll(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+    '${TAB}Future<void> reloadAll() async {$END_OF_LINE';
+    ret += '${TAB}${TAB}await _downloadAll();$END_OF_LINE';
+    ret += '${TAB}${TAB}update();$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
+    return ret;
+  }
+
   static String _getReloadOwned(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
@@ -51,6 +74,16 @@ class ProviderGenerator {
     '${TAB}Future<void> reloadOwned() async {$END_OF_LINE';
     ret += '${TAB}${TAB}await _downloadOwned();$END_OF_LINE';
     ret += '${TAB}${TAB}update();$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
+    return ret;
+  }
+
+  static String _getAllMethod(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+    '${TAB}Future<Triple<bool, List<$className>?, String>> getAll$className() async {$END_OF_LINE';
+    ret += '${TAB}${TAB}return await sGetAll${className}();$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
   }
@@ -73,6 +106,20 @@ class ProviderGenerator {
     return ret;
   }
 
+  static String _getAllStaticMethod(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+    '${TAB}static Future<Triple<bool, List<$className>?, String>> sGetAll$className() async {$END_OF_LINE';
+    ret += '${TAB}${TAB}if(_allData != null){$END_OF_LINE';
+    ret += '${TAB}${TAB}${TAB}return Triple(true, _allData, "");$END_OF_LINE';
+    ret += '${TAB}${TAB}}$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret += '${TAB}${TAB}return _downloadAll();$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
+    return ret;
+  }
+
   static String _getOwnedStaticMethod(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
@@ -84,6 +131,37 @@ class ProviderGenerator {
     ret += END_OF_LINE;
     ret += '${TAB}${TAB}return _downloadOwned();$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
+    return ret;
+  }
+
+  static String _getDownloadAll(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '';
+    ret +=
+    '${TAB}static Future<Triple<bool, List<$className>?, String>> _downloadAll() async {$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret += '${TAB}${TAB}final supabase = Supabase.instance.client;$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret += '${TAB}${TAB}try {$END_OF_LINE';
+    ret += '${TAB}${TAB}${TAB}final data = await supabase$END_OF_LINE';
+    ret += '${TAB}${TAB}${TAB}${TAB}.from(${className}.TABLE_NAME)$END_OF_LINE';
+    ret += '${TAB}${TAB}${TAB}${TAB}.select() as List<dynamic>;$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret +=
+    '${TAB}${TAB}${TAB}final result = data?.map((json) => ${className}.fromJson(json)).toList();$END_OF_LINE';
+    ret += '${TAB}${TAB}${TAB}_allData = result;$END_OF_LINE';
+    ret +=
+    '${TAB}${TAB}${TAB}_allData?.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}return Triple(true, _allData, "");$END_OF_LINE';
+    ret += '${TAB}${TAB}} catch (e, s) {$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
+    ret +=
+    '$TAB${TAB}${TAB}return Triple(false, null, e.toString());$END_OF_LINE';
+    ret += '${TAB}${TAB}}$END_OF_LINE';
+    ret += END_OF_LINE;
+    ret += '${TAB}}$END_OF_LINE';
+
     return ret;
   }
 
@@ -130,7 +208,7 @@ class ProviderGenerator {
   static String _getMembers(Schema schema) {
     var ret = '';
     ret +=
-        '${TAB}static List<${schema.metaData[CLASS_NAME]}>? _data;$END_OF_LINE';
+        '${TAB}static List<${schema.metaData[CLASS_NAME]}>? _allData;$END_OF_LINE';
 
     if (schema.metaData[IS_USER_TABLE]) {
       ret +=
