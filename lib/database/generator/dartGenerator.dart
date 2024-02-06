@@ -11,6 +11,7 @@ const String GEOGRAPHY_POINT = 'GEOGRAPHY(POINT)';
 const Map<String, String> typeMap = {
   'SERIAL': 'int',
   'BIGSERIAL': 'int',
+  'INTEGER': 'int',
   'TEXT': 'String',
   'UUID': 'String',
   'BOOLEAN': 'bool',

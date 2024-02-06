@@ -5,6 +5,7 @@ START_OF_CSV
 name,type,tableDefaultValue,classDefaultValue,skipInInsert,
 testId,uuid,uuid_generate_v4,,true,,,,
 title,TEXT,,,,,,
+testInt,INTEGER,,,,,
 customTime,TIMESTAMPTZ,,,,
 content,TEXT,,,,
 location,TEXT,,,,
