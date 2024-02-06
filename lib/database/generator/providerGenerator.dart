@@ -63,7 +63,7 @@ class ProviderGenerator {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
     ret +=
-    '${TAB}static ${className}? queryPreloadedDataById(int id) async {$END_OF_LINE';
+    '${TAB}static ${className}? queryPreloadedDataById(int id) {$END_OF_LINE';
     ret += '${TAB}${TAB}return _allData?.where((element) => element.id == id).firstOrNull;$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
