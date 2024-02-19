@@ -12,7 +12,7 @@ const Map<String, String> typeMap = {
   'SERIAL': 'int',
   'BIGSERIAL': 'int',
   'INTEGER': 'int',
-  'TEXT': 'String',
+  'TEXT': 'String?',
   'UUID': 'String',
   'BOOLEAN': 'bool',
   'NUMERIC': 'double',
