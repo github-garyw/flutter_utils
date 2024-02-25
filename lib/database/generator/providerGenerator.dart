@@ -127,7 +127,7 @@ class ProviderGenerator {
     ret += '${TAB}${TAB}${TAB}return Triple(true, _allData, "");$END_OF_LINE';
     ret += '${TAB}${TAB}}$END_OF_LINE';
     ret += END_OF_LINE;
-    ret += '${TAB}${TAB}return _downloadAll();$END_OF_LINE';
+    ret += '${TAB}${TAB}return await _downloadAll();$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
   }
@@ -141,7 +141,7 @@ class ProviderGenerator {
     ret += '${TAB}${TAB}${TAB}return Triple(true, _ownedData, "");$END_OF_LINE';
     ret += '${TAB}${TAB}}$END_OF_LINE';
     ret += END_OF_LINE;
-    ret += '${TAB}${TAB}return _downloadOwned();$END_OF_LINE';
+    ret += '${TAB}${TAB}return await _downloadOwned();$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
   }
