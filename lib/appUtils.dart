@@ -15,7 +15,7 @@ class AppUtils {
     return list == null || list.isEmpty;
   }
 
-  static bool isNullOrEmptyString(String str) {
+  static bool isNullOrEmptyString(String? str) {
     return str == null || str.trim().isEmpty;
   }
 
