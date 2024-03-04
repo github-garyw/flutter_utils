@@ -73,7 +73,7 @@ class AppUtils {
   }
 
   static Future<bool> showYesNoPopup(
-      BuildContext context, String title, String message) async {
+      BuildContext context, String title, Widget? content) async {
 
     // set up the buttons
     final Widget continueButton = TextButton(
@@ -92,7 +92,7 @@ class AppUtils {
 
     final AlertDialog alert = AlertDialog(
         title: Text(title),
-        content: Text(message),
+        content: content,
         actions: [continueButton, cancelButton]);
 
     final bool confirmation = await showDialog(
