@@ -73,8 +73,13 @@ class AppUtils {
   }
 
   static Future<bool> showYesNoPopup(
-      BuildContext context, String title, Widget? content, {String continueButtonText = 'Yes', String cancelButtonText = 'No'}) async {
-
+    BuildContext context,
+    String title,
+    Widget? content, {
+    String continueButtonText = 'Yes',
+    String cancelButtonText = 'No',
+    MainAxisAlignment actionsAlignment = MainAxisAlignment.spaceAround,
+  }) async {
     // set up the buttons
     final Widget continueButton = TextButton(
       child: Text(continueButtonText),
@@ -91,15 +96,18 @@ class AppUtils {
     );
 
     final AlertDialog alert = AlertDialog(
-        title: Text(title),
-        content: content,
-        actions: [continueButton, cancelButton]);
+      title: Center(child: Text(title)),
+      content: content,
+      actions: [continueButton, cancelButton],
+      actionsAlignment: actionsAlignment,
+    );
 
     final bool confirmation = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        }) ?? false;
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            }) ??
+        false;
 
     return confirmation;
   }
@@ -109,7 +117,8 @@ class AppUtils {
   }
 
   static void showToast(String text,
-      {ToastGravity gravity = ToastGravity.BOTTOM, Toast length = Toast.LENGTH_SHORT}) {
+      {ToastGravity gravity = ToastGravity.BOTTOM,
+      Toast length = Toast.LENGTH_SHORT}) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: length,
