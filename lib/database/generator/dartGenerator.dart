@@ -54,6 +54,9 @@ class DartGenerator {
     classContent += _getReset(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getToMap(schema);
+    classContent += END_OF_LINE;
+
     classContent += _getFactoryFromJson(schema);
     classContent += END_OF_LINE;
 
@@ -326,6 +329,23 @@ class DartGenerator {
     });
     ret += "}';$END_OF_LINE";
     ret += '$TAB}$END_OF_LINE';
+    return ret;
+  }
+
+  static String _getToMap(Schema schema) {
+    var ret = '';
+    ret += '${TAB}static Map<String, dynamic> toMap(${schema.metaData[CLASS_NAME]} obj) {$END_OF_LINE';
+    ret += '${TAB}${TAB}return {$END_OF_LINE';
+    schema.fields.forEach((field) {
+      var mappedName = field[NAME].toString();
+      if (mappedName.startsWith('_')) {
+        mappedName = mappedName.substring(1);
+      }
+      ret +=
+      '$TAB${TAB}${TAB}\'$mappedName\': obj.${field[NAME]},$END_OF_LINE';
+    });
+    ret += '${TAB}${TAB}};$END_OF_LINE';
+    ret += '${TAB}}$END_OF_LINE';
     return ret;
   }
 
