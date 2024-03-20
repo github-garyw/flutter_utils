@@ -334,7 +334,7 @@ class DartGenerator {
 
   static String _getToMap(Schema schema) {
     var ret = '';
-    ret += '${TAB}static Map<String, dynamic> toMap(${schema.metaData[CLASS_NAME]} obj) {$END_OF_LINE';
+    ret += '${TAB}static Map<String, dynamic> convertToMap(${schema.metaData[CLASS_NAME]} obj) {$END_OF_LINE';
     ret += '${TAB}${TAB}return {$END_OF_LINE';
     schema.fields.forEach((field) {
       var mappedName = field[NAME].toString();
@@ -346,6 +346,13 @@ class DartGenerator {
     });
     ret += '${TAB}${TAB}};$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
+
+    ret += '$END_OF_LINE';
+
+    ret += '${TAB}Map<String, dynamic> toMap() {$END_OF_LINE';
+    ret += '${TAB}${TAB}return convertToMap(this);${END_OF_LINE}';
+    ret += '${TAB}}$END_OF_LINE';
+
     return ret;
   }
 
