@@ -14,6 +14,7 @@ const String TYPE = "type";
 const String TABLE_DEFALT_VALUE = "tableDefaultValue";
 const String CLASS_DEFALT_VALUE = "classDefaultValue";
 const String SKIP_IN_INSERT = "skipInInsert";
+const String IS_UNIQUE = "isUnique";
 
 const String COMMENT_SYMBOL = "#";
 const String START_OF_CSV = "START_OF_CSV";
