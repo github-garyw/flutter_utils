@@ -21,6 +21,13 @@ class SQLGenerator {
       if (defaultValue != null && defaultValue.toString().isNotEmpty) {
         ret += 'DEFAULT ${defaultValue.toString()} ';
       }
+
+      final isUniqueStr = variable[IS_UNIQUE] ?? 'false';
+      final isUnique = bool.tryParse(isUniqueStr) ?? false;
+      if (isUnique) {
+        ret += 'UNIQUE ';
+      }
+
       return ret;
     }).join(', $END_OF_LINE');
 
