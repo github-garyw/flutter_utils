@@ -130,9 +130,9 @@ class ProviderGenerator {
     ret += '''${TAB}${TAB}if (res.first) {
 			final newObj = res.middle!;
 			_replace(_allData, newObj);
-		''';
+''';
     if (schema.metaData[IS_USER_TABLE]) {
-      ret += '${TAB}_replace(_ownedData, newObj);$END_OF_LINE';
+      ret += '${TAB}${TAB}${TAB}_replace(_ownedData, newObj);$END_OF_LINE';
     }
 		ret += '${TAB}${TAB}}$END_OF_LINE';
     ret += '${TAB}${TAB}return res;$END_OF_LINE';
