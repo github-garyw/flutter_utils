@@ -129,11 +129,12 @@ class ProviderGenerator {
     ret += '${TAB}${TAB}final res = await $className.update(obj);$END_OF_LINE';
     ret += '''${TAB}${TAB}if (res.first) {
 			final newObj = res.middle!;
-			if (_IS_USER_TABLE) {
-				_replace(_ownedData, newObj);
-			}
 			_replace(_allData, newObj);
-		}''';
+		''';
+    if (schema.metaData[IS_USER_TABLE]) {
+      ret += '${TAB}_replace(_ownedData, newObj);$END_OF_LINE';
+    }
+		ret += '${TAB}${TAB}}$END_OF_LINE';
     ret += '${TAB}${TAB}return res;$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
