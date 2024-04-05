@@ -135,7 +135,7 @@ class ProviderGenerator {
       ret += '${TAB}${TAB}${TAB}_replace(_ownedData, newObj);$END_OF_LINE';
     }
     ret += '${TAB}${TAB}${TAB}notify();$END_OF_LINE';
-		ret += '${TAB}${TAB}}$END_OF_LINE';
+    ret += '${TAB}${TAB}}$END_OF_LINE';
     ret += '${TAB}${TAB}return res;$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
     return ret;
