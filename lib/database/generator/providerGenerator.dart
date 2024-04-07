@@ -156,7 +156,7 @@ class ProviderGenerator {
 			_allData!.add(obj);
 ''';
     if (schema.metaData[IS_USER_TABLE]) {
-      ret += '${TAB}${TAB}${TAB}_ownedData ??= <$className>[];$END_OF_LINE';
+      ret += '${TAB}${TAB}${TAB}_ownedData ??= <$className>[]; $END_OF_LINE';
       ret += '${TAB}${TAB}${TAB}_ownedData!.add(obj);$END_OF_LINE';
     }
     ret += '${TAB}${TAB}${TAB}notify();$END_OF_LINE';
