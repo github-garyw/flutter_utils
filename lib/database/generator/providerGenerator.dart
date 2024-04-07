@@ -153,11 +153,11 @@ class ProviderGenerator {
     ret += '''${TAB}${TAB}if (res.first) {
 			final newObj = res.middle!;
 			_allData ??= <$className>[];
-			_allData!.add(obj);
+			_allData!.add(newObj);
 ''';
     if (schema.metaData[IS_USER_TABLE]) {
-      ret += '${TAB}${TAB}${TAB}_ownedData ??= <$className>[]; $END_OF_LINE';
-      ret += '${TAB}${TAB}${TAB}_ownedData!.add(obj);$END_OF_LINE';
+      ret += '${TAB}${TAB}${TAB}_ownedData ??= <$className>[];$END_OF_LINE';
+      ret += '${TAB}${TAB}${TAB}_ownedData!.add(newObj);$END_OF_LINE';
     }
     ret += '${TAB}${TAB}${TAB}notify();$END_OF_LINE';
     ret += '${TAB}${TAB}}$END_OF_LINE';
