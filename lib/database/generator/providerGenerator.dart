@@ -19,9 +19,6 @@ class ProviderGenerator {
     classContent += _getMembers(schema);
     classContent += END_OF_LINE;
 
-    classContent += _getAllStaticMethod(schema);
-    classContent += END_OF_LINE;
-
     classContent += _getAllMethod(schema);
     classContent += END_OF_LINE;
 
@@ -38,9 +35,6 @@ class ProviderGenerator {
     classContent += END_OF_LINE;
 
     if (schema.metaData[IS_USER_TABLE]) {
-      classContent += _getOwnedStaticMethod(schema);
-      classContent += END_OF_LINE;
-
       classContent += _getDownloadOwned(schema);
       classContent += END_OF_LINE;
 
@@ -223,22 +217,34 @@ Future<void> unsubscribeUpdates() async {
 
   static String _getAllMethod(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
-    var ret = '';
-    ret +=
-        '${TAB}Future<Triple<bool, List<$className>?, String>> getAll$className() async {$END_OF_LINE';
-    ret += '${TAB}${TAB}return await sGetAll${className}();$END_OF_LINE';
-    ret += '${TAB}}$END_OF_LINE';
-    return ret;
+    return '''
+	Future<Triple<bool, List<$className>?, String>> getAllUserMeta() async {
+		if (_allData != null) {
+			return Triple(true, _allData, '');
+		}
+		final res = await _downloadAll();
+		if (res.first) {
+			_allData = res.middle;
+		}
+		return res;
+	}
+    ''';
   }
 
   static String _getOwnedMethod(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
-    var ret = '';
-    ret +=
-        '${TAB}Future<Triple<bool, List<$className>?, String>> getUser$className() async {$END_OF_LINE';
-    ret += '${TAB}${TAB}return await sGetUser${className}();$END_OF_LINE';
-    ret += '${TAB}}$END_OF_LINE';
-    return ret;
+    return '''
+	Future<Triple<bool, List<$className>?, String>> getUserUserMeta() async {
+		if (_ownedData != null) {
+			return Triple(true, _ownedData, '');
+		}
+		final res = await _downloadOwned();
+		if (res.first) {
+			_ownedData = res.middle;
+		}
+		return res;
+	}
+	''';
   }
 
   static String _getUpdateMethod(Schema schema) {
@@ -291,34 +297,6 @@ Future<void> unsubscribeUpdates() async {
     return ret;
   }
 
-  static String _getAllStaticMethod(Schema schema) {
-    final className = schema.metaData[CLASS_NAME];
-    var ret = '';
-    ret +=
-        '${TAB}static Future<Triple<bool, List<$className>?, String>> sGetAll$className() async {$END_OF_LINE';
-    ret += '${TAB}${TAB}if(_allData != null){$END_OF_LINE';
-    ret += '${TAB}${TAB}${TAB}return Triple(true, _allData, "");$END_OF_LINE';
-    ret += '${TAB}${TAB}}$END_OF_LINE';
-    ret += END_OF_LINE;
-    ret += '${TAB}${TAB}return await _downloadAll();$END_OF_LINE';
-    ret += '${TAB}}$END_OF_LINE';
-    return ret;
-  }
-
-  static String _getOwnedStaticMethod(Schema schema) {
-    final className = schema.metaData[CLASS_NAME];
-    var ret = '';
-    ret +=
-        '${TAB}static Future<Triple<bool, List<$className>?, String>> sGetUser$className() async {$END_OF_LINE';
-    ret += '${TAB}${TAB}if(_ownedData != null){$END_OF_LINE';
-    ret += '${TAB}${TAB}${TAB}return Triple(true, _ownedData, "");$END_OF_LINE';
-    ret += '${TAB}${TAB}}$END_OF_LINE';
-    ret += END_OF_LINE;
-    ret += '${TAB}${TAB}return await _downloadOwned();$END_OF_LINE';
-    ret += '${TAB}}$END_OF_LINE';
-    return ret;
-  }
-
   static String _getDownloadAll(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
@@ -334,10 +312,7 @@ Future<void> unsubscribeUpdates() async {
     ret += END_OF_LINE;
     ret +=
         '${TAB}${TAB}${TAB}final result = data?.map((json) => ${className}.fromJson(json)).toList();$END_OF_LINE';
-    ret += '${TAB}${TAB}${TAB}_allData = result;$END_OF_LINE';
-    ret +=
-        '${TAB}${TAB}${TAB}_allData?.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}return Triple(true, _allData, "");$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}return Triple(true, result, "");$END_OF_LINE';
     ret += '${TAB}${TAB}} catch (e, s) {$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
@@ -374,10 +349,7 @@ Future<void> unsubscribeUpdates() async {
     ret += END_OF_LINE;
     ret +=
         '${TAB}${TAB}${TAB}final result = data?.map((json) => ${className}.fromJson(json)).toList();$END_OF_LINE';
-    ret += '${TAB}${TAB}${TAB}_ownedData = result;$END_OF_LINE';
-    ret +=
-        '${TAB}${TAB}${TAB}_ownedData?.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));$END_OF_LINE';
-    ret += '$TAB${TAB}${TAB}return Triple(true, _ownedData, "");$END_OF_LINE';
+    ret += '$TAB${TAB}${TAB}return Triple(true, result, "");$END_OF_LINE';
     ret += '${TAB}${TAB}} catch (e, s) {$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(e);$END_OF_LINE';
     ret += '$TAB${TAB}${TAB}print(s);$END_OF_LINE';
@@ -416,11 +388,11 @@ Future<void> unsubscribeUpdates() async {
         '${TAB}static const bool _IS_USER_TABLE = ${schema.metaData[IS_USER_TABLE]};$END_OF_LINE${END_OF_LINE}';
     ret += '${TAB}RealtimeChannel? channel;$END_OF_LINE';
     ret +=
-        '${TAB}static List<${schema.metaData[CLASS_NAME]}>? _allData;$END_OF_LINE';
+        '${TAB}List<${schema.metaData[CLASS_NAME]}>? _allData;$END_OF_LINE';
 
     if (schema.metaData[IS_USER_TABLE]) {
       ret +=
-          '${TAB}static List<${schema.metaData[CLASS_NAME]}>? _ownedData;$END_OF_LINE';
+          '${TAB}List<${schema.metaData[CLASS_NAME]}>? _ownedData;$END_OF_LINE';
     }
 
     return ret;
