@@ -218,7 +218,7 @@ Future<void> unsubscribeUpdates() async {
   static String _getAllMethod(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     return '''
-	Future<Triple<bool, List<$className>?, String>> getAllUserMeta() async {
+	Future<Triple<bool, List<$className>?, String>> getAll$className() async {
 		if (_allData != null) {
 			return Triple(true, _allData, '');
 		}
@@ -234,7 +234,7 @@ Future<void> unsubscribeUpdates() async {
   static String _getOwnedMethod(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     return '''
-	Future<Triple<bool, List<$className>?, String>> getUserUserMeta() async {
+	Future<Triple<bool, List<$className>?, String>> getUser$className() async {
 		if (_ownedData != null) {
 			return Triple(true, _ownedData, '');
 		}
