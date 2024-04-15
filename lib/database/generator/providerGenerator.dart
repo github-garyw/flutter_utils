@@ -189,7 +189,7 @@ Future<void> unsubscribeUpdates() async {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
     ret +=
-        '${TAB}static ${className}? queryPreloadedDataById(int id) {$END_OF_LINE';
+        '${TAB}${className}? queryPreloadedDataById(int id) {$END_OF_LINE';
     ret +=
         '${TAB}${TAB}return _allData?.where((element) => element.id == id).firstOrNull;$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
@@ -365,7 +365,7 @@ Future<void> unsubscribeUpdates() async {
   static String _getPreloadedOwnedData(Schema schema) {
     var ret = '';
     ret +=
-        '${TAB}static List<${schema.metaData[CLASS_NAME]}>? getPreloadedUserData() {$END_OF_LINE';
+        '${TAB}List<${schema.metaData[CLASS_NAME]}>? getPreloadedUserData() {$END_OF_LINE';
     ret +=
         '${TAB}${TAB}return _ownedData == null ? null : List.of(_ownedData!);$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
@@ -375,7 +375,7 @@ Future<void> unsubscribeUpdates() async {
   static String _getPreloadedAllData(Schema schema) {
     var ret = '';
     ret +=
-        '${TAB}static List<${schema.metaData[CLASS_NAME]}>? getPreloadedAllData() {$END_OF_LINE';
+        '${TAB}List<${schema.metaData[CLASS_NAME]}>? getPreloadedAllData() {$END_OF_LINE';
     ret +=
         '${TAB}${TAB}return _allData == null ? null : List.of(_allData!);$END_OF_LINE';
     ret += '${TAB}}$END_OF_LINE';
