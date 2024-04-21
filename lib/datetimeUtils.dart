@@ -3,9 +3,14 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 class DateTimeUtils {
+  static final format_yyyyMMddHHmmssSSS = DateFormat('yyyyMMddHHmmssSSS', 'en_US');
   static final format_yMdHm = DateFormat('yyyy-MM-dd HH:mm', 'en_US');
   static final format_yMd = DateFormat('yyyy-MM-dd', 'en_US');
   static final format_Hm = DateFormat('HH:mm', 'en_US');
+
+  static String getUtcyyyyMMddHHmmssSSS() {
+    return format_yyyyMMddHHmmssSSS.format(DateTime.now().toUtc());
+  }
 
   static String toLocalyHm(DateTime dateTime) {
     return format_Hm.format(dateTime);
@@ -42,4 +47,8 @@ class DateTimeUtils {
         date.millisecond, date.microsecond);
   }
 
+}
+
+void main() {
+  print(DateTimeUtils.getUtcyyyyMMddHHmmssSSS());
 }
