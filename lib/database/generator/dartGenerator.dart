@@ -13,6 +13,7 @@ const Map<String, String> typeMap = {
   'BIGSERIAL': 'int',
   'INTEGER': 'int?',
   'TEXT': 'String?',
+  'JSONB': 'Map<String, dynamic>?',
   'UUID': 'String',
   'BOOLEAN': 'bool',
   'NUMERIC': 'double?',
