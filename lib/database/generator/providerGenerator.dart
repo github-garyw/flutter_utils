@@ -129,7 +129,7 @@ class ProviderGenerator {
     ret += '''
   Future<void> subscribeDelta({bool force = false}) async {
     if (force) {
-      await unsubscribeUpdates();
+      await unsubscribeDelta();
     }
     if (channel == null) {
       final supabase = Supabase.instance.client;
