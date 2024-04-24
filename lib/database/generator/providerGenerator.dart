@@ -435,7 +435,8 @@ Future<void> unsubscribeDelta() async {
 
   static String _getImport(Schema schema) {
     var ret = '';
-    ret = "import 'package:flutter/material.dart';$END_OF_LINE";
+    ret += "import 'dart:async';$END_OF_LINE";
+    ret += "import 'package:flutter/material.dart';$END_OF_LINE";
     ret +=
         "import 'package:supabase_flutter/supabase_flutter.dart';$END_OF_LINE";
     ret += "import 'package:flutter_utils/triple.dart';$END_OF_LINE";
