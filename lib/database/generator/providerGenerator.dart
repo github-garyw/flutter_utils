@@ -46,6 +46,9 @@ class ProviderGenerator {
 
       classContent += _getPreloadedOwnedData(schema);
       classContent += END_OF_LINE;
+
+      classContent += _getSubscribeOwnedChanges(schema);
+      classContent += END_OF_LINE;
     }
 
     classContent += _getNotifyMethod();
@@ -60,7 +63,7 @@ class ProviderGenerator {
     classContent += _getInsertMethod(schema);
     classContent += END_OF_LINE;
 
-    classContent += _getRealtimeUpdatesMethods(schema);
+    classContent += _getDeltaMethods(schema);
     classContent += END_OF_LINE;
 
     classContent += _getIdExist(schema);
@@ -88,13 +91,43 @@ class ProviderGenerator {
     ''';
   }
 
-  static String _getRealtimeUpdatesMethods(Schema schema) {
+  static String _getSubscribeOwnedChanges(Schema schema) {
+    final className = schema.metaData[CLASS_NAME];
+    var ret = '''
+  Future<void> subscribeDatabaseChanges() async {
+    final supabase = Supabase.instance.client;
+    _stream ??= await supabase
+        .from($className.TABLE_NAME)
+        .stream(primaryKey: ['id'])
+        .eq('_userid', supabase.auth.currentUser!.id)
+        .order('_createdat')
+        .listen((event) {
+          print('Received event: \$event');
+          final newData =
+              event.map((json) => $className.fromJson(json)).toList();
+          _ownedData = newData;
+          notify();
+        }, onError: (error) {
+          print('Error: \$error');
+          _stream = null;
+        }, onDone: () {
+          print('Stream closed');
+          _stream = null;
+        });
+  }
+    ''';
+
+    return ret;
+
+  }
+
+  static String _getDeltaMethods(Schema schema) {
     final className = schema.metaData[CLASS_NAME];
     var ret = '';
 
     // subscribeUpdates
     ret += '''
-  Future<void> subscribeUpdates({bool force = false}) async {
+  Future<void> subscribeDelta({bool force = false}) async {
     if (force) {
       await unsubscribeUpdates();
     }
@@ -118,7 +151,7 @@ class ProviderGenerator {
 
     // unsubscribeUpdates
     ret += '''
-Future<void> unsubscribeUpdates() async {
+Future<void> unsubscribeDelta() async {
     if (channel != null) {
       final supabase = Supabase.instance.client;
       await supabase.removeChannel(channel!);
@@ -393,6 +426,8 @@ Future<void> unsubscribeUpdates() async {
     if (schema.metaData[IS_USER_TABLE]) {
       ret +=
           '${TAB}List<${schema.metaData[CLASS_NAME]}>? _ownedData;$END_OF_LINE';
+      ret +=
+          '${TAB}StreamSubscription<SupabaseStreamEvent>? _stream;$END_OF_LINE';
     }
 
     return ret;
