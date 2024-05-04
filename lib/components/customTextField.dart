@@ -100,6 +100,7 @@ class CustomTextField extends StatelessWidget {
           maxLines: maxLines,
           readOnly: readonly,
           enabled: !readonly,
+          focusNode: focusNode,
           decoration: const InputDecoration(
             border: OutlineInputBorder(), // Add border outline here
           ),
