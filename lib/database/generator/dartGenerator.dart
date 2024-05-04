@@ -79,6 +79,9 @@ class DartGenerator {
     classContent += _getDelete(schema);
     classContent += END_OF_LINE;
 
+    classContent += _getEqualAndHashCodeFunctions(schema);
+    classContent += END_OF_LINE;
+
     classContent += END_OF_LINE;
     classContent += '}$END_OF_LINE';
 
@@ -90,6 +93,19 @@ class DartGenerator {
 
     ProviderGenerator.createProviderFile(schema);
 
+  }
+
+  static String _getEqualAndHashCodeFunctions(Schema schema) {
+    return '''
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is ${schema.metaData[CLASS_NAME]} && other.id == id;
+  }
+  
+  @override
+  int get hashCode => id.hashCode;
+    ''';
   }
 
   static String _getImport(Schema schema) {
