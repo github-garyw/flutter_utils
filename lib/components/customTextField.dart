@@ -31,22 +31,24 @@ class CustomTextField extends StatelessWidget {
   final TextStyle labelTextStyle;
   final TextStyle inputTextStyle;
   final int maxLines;
+  final FocusNode? focusNode;
   late String? readonlyValue;
 
-  CustomTextField(
-      {super.key,
-      required this.label,
-      required this.controller,
-      this.desc = '',
-      this.isRequired = true,
-      this.showRedStar = true,
-      this.maxLines = 1,
-      this.readonly = false,
-      this.fieldType = FieldType.Text,
-      this.extraValidation = nullFunction,
-      this.labelTextStyle = defaultTextStyle16,
-      this.inputTextStyle = defaultTextStyle16,
-      });
+  CustomTextField({
+    super.key,
+    required this.label,
+    required this.controller,
+    this.desc = '',
+    this.isRequired = true,
+    this.showRedStar = true,
+    this.maxLines = 1,
+    this.readonly = false,
+    this.fieldType = FieldType.Text,
+    this.extraValidation = nullFunction,
+    this.labelTextStyle = defaultTextStyle16,
+    this.inputTextStyle = defaultTextStyle16,
+    this.focusNode,
+  });
 
   Widget _buildLabel() {
     List<TextSpan> textSpans = [];
@@ -83,7 +85,6 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (readonly) {
       readonlyValue = controller?.text;
     }
