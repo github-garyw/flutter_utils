@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:flutter_utils/database/generator/providerGenerator.dart';
 import 'package:flutter_utils/pair.dart';
 import 'package:path/path.dart';
 
@@ -19,6 +20,7 @@ void generateFromDirectory(String directoryPath) async {
 
   // Get a list of files in the directory
   final files = Directory(directoryPath).listSync();
+  List<Schema> schemas = [];
   // Iterate through each file and read its content
   for (var file in files) {
     if (file is File && file.path.endsWith('.csv')) {
@@ -28,8 +30,12 @@ void generateFromDirectory(String directoryPath) async {
       final schema = await readCSV2Schema(file);
       await SQLGenerator.createSqlFile(schema);
       await DartGenerator.createDartFile(schema);
+      schemas.add(schema);
     }
   }
+
+  await ProviderGenerator.createProviderUtils(schemas);
+
 }
 
 String capitalizeFirstLetter(String input) {
