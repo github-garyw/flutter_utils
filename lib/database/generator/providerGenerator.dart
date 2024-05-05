@@ -104,7 +104,7 @@ class ProviderUtils {
 $clearProviders
   }
   
-  	static List<ChangeNotifierProvider> getProvidersForMain() {
+  	static List<ChangeNotifierProvider> getProvidersForMain(BuildContext context) {
 		return [
 $changeNotifierProviders
 		];
