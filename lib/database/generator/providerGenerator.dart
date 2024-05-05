@@ -81,8 +81,10 @@ class ProviderGenerator {
   }
 
   static Future<void> createProviderUtils(List<Schema> schemas) async {
+    var import = '';
     var content = '';
     for (var schema in schemas) {
+      import = '${schema.metaData[CLASS_NAME].toString().toLowerCase()}Provider.dart;$END_OF_LINE';
       content +=
           '$TAB${TAB}Provider.of<${schema.metaData[CLASS_NAME]}Provider>(context, listen: false).clear();$END_OF_LINE';
     }
@@ -91,7 +93,7 @@ class ProviderGenerator {
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'membershipProvider.dart';
+$import
 
 class ProviderUtils {
 
