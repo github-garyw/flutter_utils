@@ -84,7 +84,7 @@ class ProviderGenerator {
     var import = '';
     var content = '';
     for (var schema in schemas) {
-      import = '${schema.metaData[CLASS_NAME].toString().toLowerCase()}Provider.dart;$END_OF_LINE';
+      import = "import '${schema.metaData[CLASS_NAME].toString().toLowerCase()}Provider.dart';$END_OF_LINE";
       content +=
           '$TAB${TAB}Provider.of<${schema.metaData[CLASS_NAME]}Provider>(context, listen: false).clear();$END_OF_LINE';
     }
