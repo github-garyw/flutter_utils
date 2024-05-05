@@ -97,7 +97,7 @@ $import
 
 class ProviderUtils {
 
-  void clear(BuildContext context) {
+  static void clear(BuildContext context) {
 $content
   }
 
