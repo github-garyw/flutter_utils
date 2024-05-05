@@ -89,7 +89,7 @@ class ProviderGenerator {
       clearProviders +=
           '$TAB${TAB}Provider.of<${schema.metaData[CLASS_NAME]}Provider>(context, listen: false).clear();$END_OF_LINE';
       changeNotifierProviders +=
-          '$TAB${TAB}ChangeNotifierProvider(create: (context) => ${schema.metaData[CLASS_NAME]}Provider()),$END_OF_LINE';
+          '$TAB${TAB}${TAB}ChangeNotifierProvider(create: (context) => ${schema.metaData[CLASS_NAME]}Provider()),$END_OF_LINE';
     }
 
     final classContent = '''
