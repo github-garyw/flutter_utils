@@ -50,6 +50,38 @@ class AppUtils {
         });
   }
 
+  static Future<bool> showOkWidgetPopup(
+      BuildContext context, String title, Widget? widget,
+      {Color? surfaceTintColor,
+        backgroundColor,
+        shadowColor,
+        String buttonText = 'OK'}) async {
+    // set up the buttons
+    final Widget continueButton = TextButton(
+      child: Text(buttonText),
+      onPressed: () {
+        Navigator.of(context).pop(true);
+      },
+    );
+
+    final AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: widget,
+      actions: [continueButton],
+      backgroundColor: backgroundColor,
+      shadowColor: shadowColor,
+      surfaceTintColor: surfaceTintColor,
+    );
+
+    final bool confirmation = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
+
+    return confirmation;
+  }
+
   static Future<bool> showOkPopup(
       BuildContext context, String title, String message) async {
     // set up the buttons
