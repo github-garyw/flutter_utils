@@ -20,6 +20,7 @@ const Map<String, String> typeMap = {
   'TIMESTAMPTZ': 'DateTime?',
   'INTEGER[]': 'List<int>?',
   'TEXT[]': 'List<String>?',
+  'UUID[]': 'List<String>?',
   GEOGRAPHY_POINT: 'SupabaseGeolocation?',
 };
 
