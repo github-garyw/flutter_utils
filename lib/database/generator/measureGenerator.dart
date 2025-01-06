@@ -28,7 +28,7 @@ void generateFromDirectory(String directoryPath) async {
 
       // Read the CSV file content
       final schema = await readCSV2Schema(file);
-      await SQLGenerator.createSqlFile(schema);
+      // await SQLGenerator.createSqlFile(schema);
       await DartGenerator.createDartFile(schema);
       schemas.add(schema);
     }
